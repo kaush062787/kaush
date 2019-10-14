@@ -1,0 +1,68 @@
+import java.io.*;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.*;
+
+public class Voter {
+
+    public static void main(String[] args) throws FileNotFoundException,IOException{
+
+        LinkedHashSet link= new LinkedHashSet();
+        LinkedHashMap linkMap= new LinkedHashMap();
+
+        File file=new File("F:\\Self\\SRS cisco\\Problem 2\\validVotersList.txt");
+        File file1=new File("F:\\Self\\SRS cisco\\Problem 2\\votersCandList.txt");
+
+        BufferedReader br = new BufferedReader(new FileReader(file));
+
+        String st;
+        while ((st = br.readLine()) != null){
+            link.add(st);
+        }
+
+        Scanner sc = null;
+        try {
+            sc = new Scanner(file1);
+            // Check if there is another line of input
+            sc.nextLine();
+            while(sc.hasNextLine()){
+                String str = sc.nextLine();
+                parseLine(str,linkMap);
+            }
+
+        } catch (IOException  exp) {
+            // TODO Auto-generated catch block
+            exp.printStackTrace();
+        }
+
+        sc.close();
+
+        Find(linkMap);
+
+    }
+
+    public static void Find(LinkedHashMap linkMap){
+
+        System.out.println("Enter voter ID");
+        Scanner input=new Scanner(System.in);
+        int voter_id=input.nextInt();
+        System.out.println(linkMap.get(voter_id));
+
+    }
+
+    private static void parseLine(String str,LinkedHashMap linkMap){
+        String voterId, candidateId;
+        Scanner sc = new Scanner(str);
+        sc.useDelimiter("[ ]");
+
+        // Check if there is another line of input
+        while(sc.hasNext()){
+            voterId = sc.next();
+            candidateId = sc.next();
+            linkMap.put(voterId,candidateId);
+
+        }
+
+        sc.close();
+    }
+}
